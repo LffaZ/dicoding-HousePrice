@@ -346,6 +346,7 @@ df_results
 
 # Joblib
 import joblib
+os.makedirs('models', exist_ok=True)
 
 joblib.dump(GBR, 'models/gbr_model.joblib')
 

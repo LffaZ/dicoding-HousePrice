@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import joblib
 
 app = Flask(__name__)
-joblib_model = joblib.load('gbr_model.joblib') # Pastikan path file sesuai dengan penyimpanan Anda
+joblib_model = joblib.load('models/gbr_model.joblib') # Pastikan path file sesuai dengan penyimpanan Anda
 
 @app.route('/predict', methods=['POST'])
 def predict():

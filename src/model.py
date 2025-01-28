@@ -34,9 +34,17 @@ api.competition_download_files(competition_name, path='./')
 # Mengekstrak file ZIP yang telah diunduh
 zip_file = f'{competition_name}.zip'
 
+# Membuat folder 'data' jika belum ada
+os.makedirs('data', exist_ok=True)
+
 with zipfile.ZipFile(zip_file, 'r') as zip_ref:
-    zip_ref.extractall('./')  # Ekstrak ke folder saat ini
-    print(f"Files extracted to: {os.getcwd()}")
+    zip_ref.extractall('./data')  # Ekstrak ke folder data
+    print(f"Files extracted to: {os.path.join(os.getcwd(), 'data')}")
+
+# Menghapus file ZIP setelah ekstraksi selesai
+if os.path.exists(zip_file):
+    os.remove(zip_file)
+    print(f"Deleted the zip file: {zip_file}")
 
 """## Data Loading"""
 
@@ -98,7 +106,7 @@ df_filtered_numeric = df.loc[condition, numeric_features]
 categorical_features = df.select_dtypes(include=['object']).columns
 df = pd.concat([df_filtered_numeric, df.loc[condition, categorical_features]], axis=1)
 
-"""hapus outliers with aggregasi sep
+"""hapus outliers dengan aggregasi sep
 
 ```
 median = df['column_name'].median()
@@ -339,22 +347,21 @@ df_results
 # Joblib
 import joblib
 
-joblib.dump(GBR, 'gbr_model.joblib')
+joblib.dump(GBR, 'models/gbr_model.joblib')
 
 # Pickle
-# import pickle
+import pickle
 
-# with open('gbr_model.pkl', 'wb') as file:
-#     pickle.dump(GBR, file)
+with open('models/gbr_model.pkl', 'wb') as file:
+    pickle.dump(GBR, file)
 
 """## Deploy"""
 
 # Memuat model dari file joblib
-joblib_model = joblib.load('gbr_model.joblib')
+joblib_model = joblib.load('models/gbr_model.joblib')
 
 # Memuat model dari file pickle
-# with open('gbr_model.pkl', 'rb') as file:
-#     pickle_model = pickle.load(file)
+with open('models/gbr_model.pkl', 'rb') as file:
+    pickle_model = pickle.load(file)
 
-"""pastikan Anda menggunakan versi Joblib dan Python yang **sama**"""
 

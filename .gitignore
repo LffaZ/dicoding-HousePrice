@@ -2,8 +2,12 @@ models/
 *.joblib
 *.pkl
 
-data/
-*.zip
+data/*.csv
+data/*.zip
+data/data_description.txt
+
+!data/data.json
+!data_description.txt
 
 venv/
 __pycache__/
